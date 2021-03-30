@@ -15,7 +15,6 @@ class TopPage extends StatelessWidget {
           )
         ],
       ),
-      // body: Center(child: Text('ルールを一覧表示するよ')),
       body: RuleListWidget(),
       floatingActionButton: FloatingActionButton(
         onPressed: () => print('ルール追加画面に遷移するよ'),
@@ -39,8 +38,35 @@ class RuleListWidget extends StatelessWidget {
       itemCount: rules.length, // リスト数を与える
       itemBuilder: (context, index) {
         // 表示内容を返す。itemCount分だけ繰り返される。indexは0からカウントアップする
-        return Text(rules[index]);
+        return RuleWidget();
       },
+    );
+  }
+}
+
+// ルールカード
+class RuleWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: InkWell(
+        onLongPress: () => {print('長押しで削除するよ')},
+        child: Column(
+          children: [
+            ListTile(
+              title: Text(
+                'ビールが欲しくなったら',
+                style: TextStyle(fontSize: 20, color: Colors.white),
+              ),
+              tileColor: Colors.blueAccent,
+            ),
+            ListTile(
+              leading: Icon(Icons.subdirectory_arrow_right),
+              title: Text('炭酸水を飲む'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
