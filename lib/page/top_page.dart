@@ -28,17 +28,29 @@ class TopPage extends StatelessWidget {
 class RuleListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final List<String> rules = [
-      'ビールが欲しくなったら => 炭酸水を飲む',
-      '食べたくなったら => ナッツを食べる',
-      'タバコが吸いたくなったら => ニコレスを吸う'
+    // カードに表示するルールリスト
+    final List<Map<String, String>> rules = [
+      {'situation': 'ビールが欲しくなったら', 'action': '炭酸水を飲む'},
+      {'situation': '食べたくなったら', 'action': 'ナッツを食べる'},
+      {'situation': 'タバコが吸いたくなったら', 'action': '二コレスを吸う'},
+    ];
+    // カード上部の背景色リスト
+    final List<Color> colors = [
+      Colors.blueAccent,
+      Colors.orangeAccent,
+      Colors.greenAccent,
+      Colors.redAccent
     ];
 
     return ListView.builder(
-      itemCount: rules.length, // リスト数を与える
+      itemCount: rules.length,
       itemBuilder: (context, index) {
-        // 表示内容を返す。itemCount分だけ繰り返される。indexは0からカウントアップする
-        return RuleWidget();
+        // リスト生成
+        return RuleWidget(
+          situation: rules[index]['situation'],
+          action: rules[index]['action'],
+          conditionColor: colors[index % colors.length],
+        );
       },
     );
   }
@@ -46,6 +58,12 @@ class RuleListWidget extends StatelessWidget {
 
 // ルールカード
 class RuleWidget extends StatelessWidget {
+  final String situation;
+  final String action;
+  final Color conditionColor;
+
+  RuleWidget({this.situation, this.action, this.conditionColor});
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -55,14 +73,14 @@ class RuleWidget extends StatelessWidget {
           children: [
             ListTile(
               title: Text(
-                'ビールが欲しくなったら',
+                situation,
                 style: TextStyle(fontSize: 20, color: Colors.white),
               ),
-              tileColor: Colors.blueAccent,
+              tileColor: conditionColor,
             ),
             ListTile(
               leading: Icon(Icons.subdirectory_arrow_right),
-              title: Text('炭酸水を飲む'),
+              title: Text(action),
             ),
           ],
         ),
