@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:if_then_card/page/add_page.dart';
 
 // トップ画面
 class TopPage extends StatelessWidget {
@@ -11,13 +12,19 @@ class TopPage extends StatelessWidget {
           Tooltip(message: 'アイコンボタンをホバーしたときに表示されるテキスト'),
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: () => print('ルール追加画面に遷移するよ'),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddPage()),
+            ),
           )
         ],
       ),
       body: RuleListWidget(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => print('ルール追加画面に遷移するよ'),
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AddPage()),
+        ),
         child: const Icon(Icons.add),
       ),
     );

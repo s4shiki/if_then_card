@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:if_then_card/page/add_page.dart';
 import 'package:if_then_card/page/top_page.dart';
 
 // アプリ起動
@@ -14,8 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false, // シミュレーターの右上にdebugというラベルが表示されなくなります
       title: 'IF THEN CARD',
-//      home: TopPage(), // 起動時に表示される画面
-      home: AddPage(), // 起動時に表示される画面
+      home: TopPage(), // 起動時に表示される画面
     );
   }
 }
