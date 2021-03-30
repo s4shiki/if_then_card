@@ -1,6 +1,7 @@
 # if_then_card
+if-then planningのルール管理アプリ
 
-A new Flutter project.
+Qiita記事：[習慣改善アプリを作りながら学ぶFlutter入門](https://qiita.com/kacho/items/ef9d38346a543af93df5)用のリポジトリです。
 
 ## Getting Started
 
