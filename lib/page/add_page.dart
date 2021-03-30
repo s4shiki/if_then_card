@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:if_then_card/main.dart';
 
 // ルール追加画面
 class AddPage extends StatelessWidget {
@@ -74,7 +76,9 @@ class _RuleFormState extends State<RuleForm> {
                 if (_formKey.currentState.validate()) {
                   ScaffoldMessenger.of(context)
                       .showSnackBar(SnackBar(content: Text('登録しました')));
-                  print("登録したよ。条件：$situationText 行動：$actionText");
+                  context
+                      .read(rulesProvider)
+                      .add(situation: situationText, action: actionText);
                   Navigator.pop(context); // TOP画面に戻る
                 }
               },

@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:if_then_card/model/rules.dart';
 import 'package:if_then_card/page/top_page.dart';
 
-// アプリ起動
+final rulesProvider = ChangeNotifierProvider(
+  (ref) => Rules(), // Rulesのインスタンスが生成される
+);
+
+// 起動
 void main() {
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
 // アプリの設定

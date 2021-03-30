@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:if_then_card/main.dart';
+import 'package:if_then_card/model/rule.dart';
 import 'package:if_then_card/page/add_page.dart';
 
 // トップ画面
@@ -32,30 +35,26 @@ class TopPage extends StatelessWidget {
 }
 
 // ルール一覧
-class RuleListWidget extends StatelessWidget {
+class RuleListWidget extends ConsumerWidget {
+  // カード上部の背景色リスト
+  final List<Color> colors = [
+    Colors.blueAccent,
+    Colors.orangeAccent,
+    Colors.greenAccent,
+    Colors.redAccent
+  ];
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ScopedReader watch) {
     // カードに表示するルールリスト
-    final List<Map<String, String>> rules = [
-      {'situation': 'ビールが欲しくなったら', 'action': '炭酸水を飲む'},
-      {'situation': '食べたくなったら', 'action': 'ナッツを食べる'},
-      {'situation': 'タバコが吸いたくなったら', 'action': '二コレスを吸う'},
-    ];
-    // カード上部の背景色リスト
-    final List<Color> colors = [
-      Colors.blueAccent,
-      Colors.orangeAccent,
-      Colors.greenAccent,
-      Colors.redAccent
-    ];
+    final rules = watch(rulesProvider).rules;
 
     return ListView.builder(
       itemCount: rules.length,
       itemBuilder: (context, index) {
         // リスト生成
         return RuleWidget(
-          situation: rules[index]['situation'],
-          action: rules[index]['action'],
+          rule: rules[index],
           conditionColor: colors[index % colors.length],
         );
       },
@@ -65,29 +64,28 @@ class RuleListWidget extends StatelessWidget {
 
 // ルールカード
 class RuleWidget extends StatelessWidget {
-  final String situation;
-  final String action;
+  final Rule rule;
   final Color conditionColor;
 
-  RuleWidget({this.situation, this.action, this.conditionColor});
+  RuleWidget({this.rule, this.conditionColor});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
-        onLongPress: () => {print('長押しで削除するよ')},
+        onLongPress: () => context.read(rulesProvider).delete(rule),
         child: Column(
           children: [
             ListTile(
               title: Text(
-                situation,
+                rule.situation,
                 style: TextStyle(fontSize: 20, color: Colors.white),
               ),
               tileColor: conditionColor,
             ),
             ListTile(
               leading: Icon(Icons.subdirectory_arrow_right),
-              title: Text(action),
+              title: Text(rule.action),
             ),
           ],
         ),
